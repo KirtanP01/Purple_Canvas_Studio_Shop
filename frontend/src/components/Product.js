@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
+import Rating from './Rating'
 
 const Product = ({ product }) => {
   return (
@@ -16,9 +17,12 @@ const Product = ({ product }) => {
             </a>
 
             <Card.Text as='div'>
-                <div className='my-3'>
-                    {product.rating} from {product.numReviews} reviews
-                </div>
+                <Rating 
+                value={product.rating} 
+                text={`${product.numReviews} reviews`} 
+                // Use below line to set the stars to certain color
+                //color='any color'
+                />
             </Card.Text>
 
             <Card.Text as='h3'>
