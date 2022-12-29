@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
-import Rating from './Rating'
+import ProductRating from './ProductRating'
 
 const Product = ({ product }) => {
   return (
@@ -18,7 +18,7 @@ const Product = ({ product }) => {
             </Link>
 
             <Card.Text as='div'>
-                <Rating 
+                <ProductRating 
                 value={product.rating} 
                 text={`${product.numReviews} reviews`} 
                 // Use below line to set the stars to certain color
