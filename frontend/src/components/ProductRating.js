@@ -65,6 +65,7 @@ const ProductRating = ({ value, text, color }) => {
 }
 
 ProductRating.defaultProps = {
+    value: 0.0,
     color: '#f8e825',
 }
 
