@@ -69,7 +69,7 @@ const ProductDisplayPage = ({ match }) => {
                     Status: 
                   </Col>
                   <Col>
-                    {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
+                    {product.quantityInStock > 0 ? 'In Stock' : 'Out Of Stock'}
                   </Col>
                 </Row>
               </ListGroup.Item>
