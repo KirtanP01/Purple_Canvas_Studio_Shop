@@ -19,7 +19,7 @@ const CartPage = ({ match, history }) => {
   const cart = useSelector(state => state.cart)
   const { cartItems } = cart
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if(productId){
