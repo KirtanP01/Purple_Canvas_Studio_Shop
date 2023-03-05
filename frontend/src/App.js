@@ -6,8 +6,9 @@ import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
 import ProductDisplayPage from './pages/ProductDisplayPage'
 import CartPage from './pages/CartPage'
-import LoginPage from "./pages/LoginPage"
-import RegisterPage from "./pages/RegisterPage"
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import ProfilePage from './pages/ProfilePage'
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Routes>
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
+            <Route path='/profile' element={<ProfilePage />} />
             <Route path='/product/:id' element={<ProductDisplayPage />} />
             <Route path='/cart/:id?' element={<CartPage />} />
             <Route path='/' element={<HomePage />} exact />
