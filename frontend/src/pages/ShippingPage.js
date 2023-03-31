@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { redirect, useLocation, useNavigate, useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
+import { CheckoutSteps } from '../components/CheckoutSteps'
 //import Checkbox,{checked} from '../components/CheckBox'
 import { saveShippingAddress } from '../actions/cartActions'
 
@@ -47,6 +48,7 @@ const ShippingPage = ({  }) => {
       //<label htmlFor="schoolPickup">&nbsp;&nbsp;School Pickup</label>
 
     return <FormContainer>
+        <CheckoutSteps step1 step2 />
         <h1>Shipping</h1>
         <label> <input type="checkbox"  name="schoolPickup" value={isChecked} onChange={handleChange} /> &nbsp;School Pickup  </label>
         {isChecked ?
