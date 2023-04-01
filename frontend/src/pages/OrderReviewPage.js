@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Message from '../components/Message'
 import { CheckoutSteps } from '../components/CheckoutSteps'
+import { createOrder } from '../actions/orderActions'
 
-const PlaceOrderPage = () => {
-    
+const PlaceOrderPage = ({  }) => {
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const state = useState()
 
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector((state) => state.cart)
 
     const addDecimals = (num) => {
         return (Math.round(num * 100) / 100).toFixed(2)
@@ -23,8 +26,27 @@ const PlaceOrderPage = () => {
     cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
     
 
+    const orderCreate = useSelector((state) => state.orderCreate)
+    const { order, success, error } = orderCreate
+
+    useEffect(() => {
+        console.log(success)
+        if(success){
+            console.log('go to orders page')
+            navigate(`/order/${order._id}`)
+        }
+    }, [navigate, success])
+
     const placeOrderHandler = () => {
-        console.log('order')
+        dispatch(createOrder({
+            orderItems: cart.cartItems,
+            shippingAddress: cart.shippingAddress,
+            paymentMethod: cart.paymentMethod,
+            itemsPrice: cart.itemsPrice,
+            shippingPrice: cart.shippingPrice,
+            taxPrice: cart.taxPrice,
+            totalPrice: cart.totalPrice,
+        }))
     }
 
   return (
@@ -59,10 +81,10 @@ const PlaceOrderPage = () => {
                                     <ListGroup.Item key={index}>
                                         <Row>
                                             <Col md={1}>
-                                                <Image src={item.Image} alt={item.name} fluid rounded/>
+                                                <Image src={item.image} alt={item.name} fluid rounded />
                                             </Col>
                                             <Col>
-                                                <Link to={`/product/${item.prduct}`}>
+                                                <Link to={`/product/${item.product}`}>
                                                     {item.name}
                                                 </Link>
                                             </Col>
@@ -111,8 +133,19 @@ const PlaceOrderPage = () => {
                                 <Col>${cart.totalPrice}</Col>
                             </Row>
                         </ListGroup.Item>
+                        
                         <ListGroup.Item>
-                            <Button type='button' className='col-12' disabled={cart.cartItems === 0} onClick={placeOrderHandler}>Place Order</Button>
+                            {error &&  <Message variant='danger'>{error}</Message>}
+                        </ListGroup.Item>
+
+                        <ListGroup.Item>
+                            <Button 
+                                type='button'
+                                className='col-12'
+                                disabled={cart.cartItems === 0}
+                                onClick={placeOrderHandler}>
+                                Place Order
+                            </Button>
                         </ListGroup.Item>
                     </ListGroup>
                 </Card>

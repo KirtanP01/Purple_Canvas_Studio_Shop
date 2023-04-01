@@ -15,6 +15,7 @@ connectDb()
 const importData = async() => {
     try {
         await Order.deleteMany()
+/*
         await Product.deleteMany()
         await User.deleteMany()
 
@@ -29,6 +30,7 @@ const importData = async() => {
         await Product.insertMany(sampleProducts)
 
         console.log('Data Imported'.green.inverse)
+*/        
         process.exit()
     } catch (error) {
         console.log(`${error}`.red.inverse)
