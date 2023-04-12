@@ -58,6 +58,9 @@ const orderSchema = mongoose.Schema({
         required: true,
         default: false
     },
+    createdAt: {
+        type: Date
+    },
     paidAt: {
         type: Date
     },
