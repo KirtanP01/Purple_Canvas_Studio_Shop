@@ -39,7 +39,7 @@ const ProfilePage = ({  }) => {
                 dispatch(getUserDetails('profile'))
                 dispatch(listMyOrders())
             } else {
-                console.log(user.name)
+                //console.log(user.name)
                 setName(user.name)
                 setEmail(user.email)
             }

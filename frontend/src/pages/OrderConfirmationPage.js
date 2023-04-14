@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getOrderDetails, payOrder } from '../actions/orderActions'
-import { ORDER_PAY_RESET } from '../constants/orderConstants'
+import { getOrderDetails, payOrder, deliverOrder } from '../actions/orderActions'
+import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants'
 
 const OrderConfirmationPage = ({ match }) => {
 
@@ -22,8 +22,14 @@ const OrderConfirmationPage = ({ match }) => {
     const orderDetails = useSelector((state) => state.orderDetails)
     const { order, loading, error } = orderDetails
 
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
+
     const orderPay = useSelector((state) => state.orderPay)
     const { loading: loadingPay, success: successPay } = orderPay
+
+    const orderDeliver = useSelector((state) => state.orderDeliver)
+    const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
     useEffect(() => {
         const addPayPalScript = async () => {
@@ -39,8 +45,9 @@ const OrderConfirmationPage = ({ match }) => {
         }
 
         //if(!order || order._id !== orderId) {
-            if(!order || successPay){
+            if(!order || successPay || successDeliver){
                 dispatch({ type: ORDER_PAY_RESET })
+                dispatch({ type: ORDER_DELIVER_RESET })
                 dispatch(getOrderDetails(orderId))
             } else if(!order.isPaid) {
                 if(!window.paypal) {
@@ -50,13 +57,17 @@ const OrderConfirmationPage = ({ match }) => {
                 setSdkReady(true)
             }
         }
-    , [dispatch, order, orderId, successPay])
+    , [dispatch, order, orderId, successPay, successDeliver])
 
     const successPaymentHandler = (paymentResult) => {
-        console.log(paymentResult)
+        //console.log(paymentResult)
         dispatch(payOrder(orderId, paymentResult))
     }
 
+    const deliverHandler = () => {
+        //console.log(order)
+        dispatch(deliverOrder(order))
+    }
   return (
     loading 
     ? <Loader /> 
@@ -170,6 +181,12 @@ const OrderConfirmationPage = ({ match }) => {
                                 )}
                             </ListGroup.Item>
                         )}
+                        {loadingDeliver && <Loader />}
+                         {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                            <ListGroup.Item>
+                                <Button type= 'button' className='btn btn-block col-12' onClick={deliverHandler}>Mark As Delivered</Button>
+                            </ListGroup.Item>
+                         ) }
                     </ListGroup>
                 </Card>
             </Col>

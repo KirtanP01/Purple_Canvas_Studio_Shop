@@ -30,9 +30,9 @@ const OrderReviewPage = ({  }) => {
     const { order, success, error } = orderCreate
 
     useEffect(() => {
-        console.log(success)
+        //console.log(success)
         if(success){
-            console.log('go to orders page')
+            //console.log('go to orders page')
             navigate(`/order/${order._id}`)
         }
     }, [navigate, success])
