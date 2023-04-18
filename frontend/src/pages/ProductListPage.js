@@ -1,19 +1,24 @@
 import React, { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Button, Table, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Paginate from '../components/Paginate'
 import { listProducts, deleteProduct, addProduct } from '../actions/productActions'
 import { PRODUCT_ADD_RESET } from '../constants/productConstants'
 
+
 const ProductListPage = () => {
+    const params = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const pageNumber = params.pageNumber || 1
+
     const productList = useSelector(state => state.productList)
-    const { loading, error, products } = productList
+    const { loading, error, products, page, pages } = productList
 
     const productDelete = useSelector(state => state.productDelete)
     const { loading:loadingDelete, error:errorDelete, success:successDelete } = productDelete
@@ -34,10 +39,11 @@ const ProductListPage = () => {
         if(successAdd){
             navigate(`/admin/product/${addedProduct._id}/edit`)
         } else{
-            dispatch(listProducts())
+            //dispatch(listProducts())
+            dispatch(listProducts('', pageNumber))
         }
 
-    }, [dispatch, navigate, userInfo, successDelete, successAdd, addedProduct])
+    }, [dispatch, navigate, userInfo, successDelete, successAdd, addedProduct, pageNumber])
 
     const deleteHandler = (id) => {
         if(window.confirm('Are you sure?')) {
@@ -66,15 +72,16 @@ const ProductListPage = () => {
         {errorAdd && <Message variant='danger'>{errorAdd}</Message> }        
         {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message>
         : (
+            <>
             <Table striped bordered hover responsive className='table-sm'>
-                <thead>
+                <thead className='table-head'>
                     <tr>
-                        <th>ID</th>
-                        <th>NAME</th>
-                        <th>PRICE</th>
-                        <th>SIZE</th>
-                        <th>BRAND</th>
-                        <th>ACTION</th>
+                        <th className='column-head'>ID</th>
+                        <th className='column-head'>NAME</th>
+                        <th className='column-head'>PRICE</th>
+                        <th className='column-head'>SIZE</th>
+                        <th className='column-head'>BRAND</th>
+                        <th className='column-head'>ACTION</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,6 +106,8 @@ const ProductListPage = () => {
                     ))}
                 </tbody>
             </Table>
+            <Paginate pages = {pages} page = {page} isAdmin = {true} />
+            </>
         )}
     </>
   )

@@ -32,6 +32,9 @@ const OrderConfirmationPage = ({ match }) => {
     const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
     useEffect(() => {
+        if(!userInfo){
+            navigate('/login')
+        }
         const addPayPalScript = async () => {
             const  { data: clientId } = await axios.get('/api/config/paypal')
             const script = document.createElement('script')

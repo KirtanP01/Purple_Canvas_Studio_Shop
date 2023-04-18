@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
+import { Row, Col, Image, ListGroup, Card, Button, Form, ListGroupItem } from 'react-bootstrap'
 //import axios from 'axios'
 import ProductRating from '../components/ProductRating'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 //import products from '../products'
-import { listProductDetails } from '../actions/productActions'
+import { listProductDetails, createProductReview } from '../actions/productActions'
+import{PRODUCT_REVIEW_RESET} from '../constants/productConstants'
 
 
 
@@ -31,18 +32,33 @@ const ProductDisplayPage = ({ history, match }) => {
   const params = useParams()
 
   const [qty, setQty] = useState(1)
+  const [rating, setRating] = useState(0)
+  const [comment, setComment] = useState('')
 
   const dispatch = useDispatch()
   
   const productDetails = useSelector(state => state.productDetails)
   const { loading, error, product } = productDetails
   
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  const productReviewCreate = useSelector(state => state.productReviewCreate)
+  const { success:successProductReview, error:errorProductReview } = productReviewCreate
+
   //const history = useHistory()
   const navigate = useNavigate();
 
   useEffect(() => {
+    if(successProductReview){
+      alert('Product review submitted successfully!')
+      setRating(0)
+      setComment('')
+      dispatch({type:PRODUCT_REVIEW_RESET})
+
+    }
     dispatch(listProductDetails(params.id))
-  }, [dispatch, params])
+  }, [dispatch, params, successProductReview])
 
   
 
@@ -50,6 +66,12 @@ const ProductDisplayPage = ({ history, match }) => {
     navigate(`/cart/${params.id}?qty=${qty}`)
   }
 
+  const submitHandler = (e) => {
+    e.preventDefault()
+    //console.log('Rating ' + rating)
+    //console.log('Comment ' + comment)
+    dispatch(createProductReview(params.id,{rating, comment}))
+  }
   return (
     <>
       <Link className='btn btn-dark my-3' to='/'>
@@ -60,6 +82,7 @@ const ProductDisplayPage = ({ history, match }) => {
         : error 
         ? <Message variant='danger'>{error}</Message> 
         : (
+          <>
           <Row>
           <Col md={6}>
             <Image src={product.image} alt={product.name} fluid></Image>
@@ -140,6 +163,57 @@ const ProductDisplayPage = ({ history, match }) => {
             </Card>
           </Col>
         </Row>
+        <Row>
+           <Col md={6}></Col>
+           <h2>Reviews</h2>
+           {product.reviews.length === 0 && <Message>No reviews available</Message>} 
+           <ListGroup variant='flush'>
+            {product.reviews.map(review =>(
+              <ListGroupItem key ={review._id}>
+                <strong>{review.name}</strong>
+                <ProductRating text='' value={review.rating} />
+                <p>{review.createdAt.substring(0, 10)}</p>
+                <p>{review.comment}</p>
+              </ListGroupItem>
+            ))}
+              <ListGroupItem>
+                <h2>Write a product reviews</h2>
+                {errorProductReview && <Message variant='danger'>{errorProductReview} </Message>}
+                {userInfo
+                ? <Form onSubmit={submitHandler}>  
+                      <Form.Group controlId='rating'>
+                        <Form.Label>Rating</Form.Label>
+                          <Form.Control 
+                            as='select' 
+                            value={rating} 
+                            onChange={(e) => setRating(e.target.value)} >
+                              <option value={Number('0')}>Select....</option>
+                              <option value={Number('1')}>1 - Poor</option>
+                              <option value={Number('2')}>2 - Fair</option>
+                              <option value={Number('3')}>3 - Good</option>
+                              <option value={Number('4')}>4 - Very Good</option>
+                              <option value={Number('5')}>5 - Excellent</option>
+                          </Form.Control>
+                      </Form.Group >
+                      <Form.Group controlId='comment'>
+                        <Form.Label>Comment</Form.Label>
+                        <Form.Control 
+                          as='textarea' 
+                          row='3' 
+                          value={comment} 
+                          onChange={(e) => setComment(e.target.value)} >
+                        </Form.Control>
+                      </Form.Group>
+                      <Button type='submit' variant='primary'>Submit</Button>
+                  </Form>
+
+                :<Message>Please <Link to='/login'>Sign-in</Link> to write a review</Message> 
+
+                }
+              </ListGroupItem>
+           </ListGroup> 
+        </Row>
+        </>
       )}
     </>
   )

@@ -31,15 +31,15 @@ const OrderListPage = () => {
         {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message>
         : (
             <Table striped bordered hover responsive className='table-sm'>
-                <thead>
+                <thead className='table-head'>
                     <tr>
-                        <th>ID</th>
-                        <th>USER</th>
-                        <th>DATE</th>
-                        <th>TOTAL</th>
-                        <th>PAID</th>
-                        <th>DELIVERED</th>
-                        <th>ACTION</th>
+                        <th className='column-head'>ID</th>
+                        <th className='column-head'>USER</th>
+                        <th className='column-head'>DATE</th>
+                        <th className='column-head'>TOTAL</th>
+                        <th className='column-head'>PAID</th>
+                        <th className='column-head'>DELIVERED</th>
+                        <th className='column-head'>ACTION</th>
                     </tr>
                 </thead>
                 <tbody>

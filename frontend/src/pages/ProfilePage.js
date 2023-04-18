@@ -112,14 +112,14 @@ const ProfilePage = ({  }) => {
             <h2>My Orders</h2>
             {loadingOrders ? <Loader /> : errorOrders ? <Message variant='danger'>{errorOrders}</Message>: (
                 <Table striped bordered hover responsive className='table-sm'>
-                    <thead>
+                    <thead className='table-head'>
                         <tr>
-                            <th>ID</th>
-                            <th>DATE</th>
-                            <th>TOTAL</th>
-                            <th>PAID</th>
-                            <th>DELIVERED</th>
-                            <th></th>
+                            <th className='column-head'>ID</th>
+                            <th className='column-head'>DATE</th>
+                            <th className='column-head'>TOTAL</th>
+                            <th className='column-head'>PAID</th>
+                            <th className='column-head'>DELIVERED</th>
+                            <th className='column-head'></th>
                         </tr>
                     </thead>
                     <tbody>

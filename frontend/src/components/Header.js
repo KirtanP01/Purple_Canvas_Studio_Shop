@@ -1,8 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Route } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { logout } from '../actions/userActions'
+import SearchBox, {SerachBox} from './SearchBox'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -16,13 +18,14 @@ const Header = () => {
 
   return (
     <header>
-        <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+        <Navbar  className='color-nav' /*bg='dark'*/ variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>Endless Dress</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
+          <SearchBox />
             <Nav className='ms-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link><i className='fas fa-shopping-cart'></i>Cart</Nav.Link>

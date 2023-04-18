@@ -40,13 +40,13 @@ const UserListPage = () => {
         {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message>
         : (
             <Table striped bordered hover responsive className='table-sm'>
-                <thead>
+                <thead className='table-head'>
                     <tr>
-                        <th>ID</th>
-                        <th>NAME</th>
-                        <th>EMAIL</th>
-                        <th>ADMIN</th>
-                        <th>ACTION</th>
+                        <th className='column-head'>ID</th>
+                        <th className='column-head'>NAME</th>
+                        <th className='column-head'>EMAIL</th>
+                        <th className='column-head'>ADMIN</th>
+                        <th className='column-head'>ACTION</th>
                     </tr>
                 </thead>
                 <tbody>
