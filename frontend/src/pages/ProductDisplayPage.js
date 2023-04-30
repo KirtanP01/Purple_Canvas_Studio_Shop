@@ -34,6 +34,7 @@ const ProductDisplayPage = ({ history, match }) => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
+  const [size, setSize] = useState('')
 
   const dispatch = useDispatch()
   
@@ -54,6 +55,7 @@ const ProductDisplayPage = ({ history, match }) => {
       alert('Product review submitted successfully!')
       setRating(0)
       setComment('')
+      setSize('')
       dispatch({type:PRODUCT_REVIEW_RESET})
 
     }
@@ -116,6 +118,16 @@ const ProductDisplayPage = ({ history, match }) => {
                     </Col>
                     <Col>
                       <strong>${product.price}</strong>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>
+                      Size: 
+                    </Col>
+                    <Col>
+                      {product.size}
                     </Col>
                   </Row>
                 </ListGroup.Item>
