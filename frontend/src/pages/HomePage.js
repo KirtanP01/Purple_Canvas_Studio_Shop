@@ -44,7 +44,7 @@ const HomePage = () => {
      
       {!keyword? <ProductCarousel /> : <Link to='/' className='btn btn-dark'>Go Back</Link>}
 
-      <h1>Product List Page</h1>
+      <h1>Products</h1>
       {loading 
       ? (<Loader />)
       : error 
