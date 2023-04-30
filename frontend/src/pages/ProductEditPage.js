@@ -136,7 +136,7 @@ const ProductEditPage = ({ match }) => {
                     type='text' 
                     placeholder='Enter image URL'
                     value={image}
-                    onChange={(e) => setImage(e.target.checked)}
+                    onChange={(e) => setImage(e.target.value)}
                 ></Form.Control>
                 <Form.Control
                     type='file'
@@ -154,7 +154,7 @@ const ProductEditPage = ({ match }) => {
                     type='text' 
                     placeholder='Enter description'
                     value={description}
-                    onChange={(e) => setDescription(e.target.checked)}
+                    onChange={(e) => setDescription(e.target.value)}
                 ></Form.Control>
             </Form.Group>
 
@@ -164,7 +164,7 @@ const ProductEditPage = ({ match }) => {
                     type='text' 
                     placeholder='Enter brand'
                     value={brand}
-                    onChange={(e) => setBrand(e.target.checked)}
+                    onChange={(e) => setBrand(e.target.value)}
                 ></Form.Control>
             </Form.Group>
 
@@ -184,7 +184,7 @@ const ProductEditPage = ({ match }) => {
                     type='text' 
                     placeholder='Enter size'
                     value={size}
-                    onChange={(e) => setSize(e.target.checked)}
+                    onChange={(e) => setSize(e.target.value)}
                 ></Form.Control>
             </Form.Group>
 
@@ -194,7 +194,7 @@ const ProductEditPage = ({ match }) => {
                     type='text' 
                     placeholder='Enter category'
                     value={category}
-                    onChange={(e) => setCategory(e.target.checked)}
+                    onChange={(e) => setCategory(e.target.value)}
                 ></Form.Control>
             </Form.Group>
 
