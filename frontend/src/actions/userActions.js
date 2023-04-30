@@ -26,6 +26,7 @@ import {
     USER_UPDATE_FAIL
 } from "../constants/userConstants"
 import { LIST_MY_ORDERS_RESET } from '../constants/orderConstants'
+import { CART_RESET } from '../constants/cartConstants'
 
 export const login = (email, password) => async(dispatch) => {
     try{
@@ -161,6 +162,13 @@ export const updateUserProfile = (user) => async(dispatch, getState) => {
             type: USER_UPDATE_PROFILE_SUCCESS,
             payload: data,
         })
+
+        dispatch({
+            type: USER_LOGIN_SUCCESS,
+            payload: data,
+        })
+
+        localStorage.setItem('userInfo', JSON.stringify(data))
 
     } catch(error) {
         dispatch({

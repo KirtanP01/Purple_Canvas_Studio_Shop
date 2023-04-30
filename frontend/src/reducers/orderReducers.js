@@ -85,7 +85,7 @@ export const orderPayReducer = (state = {}, action) => {
                 error: action.payload,
             }
         case ORDER_PAY_RESET:
-            return{}
+            return {}
 
         default:
             return state
@@ -157,7 +157,7 @@ export const orderDeliverReducer = (state = {}, action) => {
                 error: action.payload,
             }
         case ORDER_DELIVER_RESET:
-            return{}
+            return {}
 
         default:
             return state

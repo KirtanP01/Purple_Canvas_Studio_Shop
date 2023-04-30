@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -32,6 +32,15 @@ const ShippingPage = ({  }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
+
+    useEffect(() => {
+        if(!userInfo){
+            navigate('/login')
+        }
+    }, [userInfo])
+
     const submitHandler = (e) => {
         e.preventDefault()
         isChecked ? dispatch(saveShippingAddress({ address: '1000 S Quentin Rd', city: 'Palatine', postalCode: '60067', stateCode: 'IL', country: 'USA' })) :
@@ -42,7 +51,7 @@ const ShippingPage = ({  }) => {
     const [isChecked, setIsChecked] = useState(false);
     const handleChange = (e) => {
        setIsChecked(e.target.checked);
-      }
+    }
     
       //<input type="checkbox"  name="schoolPickup" value={isChecked} onChange={handleChange} />
       //<label htmlFor="schoolPickup">&nbsp;&nbsp;School Pickup</label>

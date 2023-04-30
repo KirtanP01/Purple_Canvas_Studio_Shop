@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { logout } from '../actions/userActions'
 import SearchBox, {SerachBox} from './SearchBox'
+import { CART_RESET } from '../constants/cartConstants'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -13,6 +14,7 @@ const Header = () => {
   const {userInfo} = userLogin
 
   const logoutHandler = () => {
+    dispatch({ type: CART_RESET })
     dispatch(logout())
   }
 
@@ -41,7 +43,7 @@ const Header = () => {
               <Nav.Link><i className='fas fa-user'></i>Sign In</Nav.Link>
             </LinkContainer>}
             {userInfo && userInfo.isAdmin && (
-              <NavDropdown title='Administation' id='adminmenu' className='dropdown-toggle'>
+              <NavDropdown title='Admin' id='adminmenu'>
                 <LinkContainer to='/admin/userlist'>
                   <NavDropdown.Item>Users</NavDropdown.Item>
                 </LinkContainer>
