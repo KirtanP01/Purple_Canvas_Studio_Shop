@@ -58,23 +58,46 @@ const ProductEditPage = ({ match }) => {
         const file = e.target.files[0]
         const formData = new FormData()
         formData.append('image', file)
-        setUploading(true)
+        console.log('File name: ' + file)
+        console.log('Existing file name: ' + product.image)
+        if (!file){
+            setImage(product.image)
+            setUploading(false)
+        } else {
+            setUploading(true)
 
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+            try {
+                const config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }
+    
+                const { data } = await axios.post('/api/upload', formData, config)
+    
+                setImage(data)
+                setUploading(false)
+            } catch (error) {
+                console.log(error)
+                setUploading(false)
             }
-
-            const { data } = await axios.post('/api/upload', formData, config)
-
-            setImage(data)
-            setUploading(false)
-        } catch (error) {
-            console.log(error)
-            setUploading(false)
         }
+
+        // try {
+        //     const config = {
+        //         headers: {
+        //             'Content-Type': 'multipart/form-data'
+        //         }
+        //     }
+
+        //     const { data } = await axios.post('/api/upload', formData, config)
+
+        //     setImage(data)
+        //     setUploading(false)
+        // } catch (error) {
+        //     console.log(error)
+        //     setUploading(false)
+        // }
     }
 
     const submitHandler = (e) => {
