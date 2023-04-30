@@ -21,7 +21,7 @@ const OrderReviewPage = ({  }) => {
 
     // Calculate Prices
     cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
-    cart.shippingPrice = addDecimals(cart.itemsPrice > 50 ? 0 : 15)
+    cart.shippingPrice = addDecimals(cart.itemsPrice > 75 ? 0 : 15)
     cart.taxPrice = addDecimals(Number((0.10 * cart.itemsPrice).toFixed(2)))
     cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
     
