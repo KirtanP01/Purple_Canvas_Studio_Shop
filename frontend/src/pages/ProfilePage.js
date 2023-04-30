@@ -80,8 +80,9 @@ const ProfilePage = ({  }) => {
                 <Form.Control 
                     type='email' 
                     placeholder='Enter email' 
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    readOnly
+                    //onChange={(e) => setEmail(e.target.value)}
                 ></Form.Control>
             </Form.Group>
             
