@@ -36,43 +36,26 @@ const PaymentPage = ({  }) => {
         <CheckoutSteps step1 step2 step3 />
         <h1>Payment Method</h1>
          <Form onSubmit={submitHandler}>
-            <Form.Group>
+            <Form.Group className='mb-3'>
                 <Form.Label as='legend'>Select Payment Method</Form.Label>
             
 
             <Col>
                 <Form.Check 
                     type='radio' 
-                    label='PayPal or Credit Card' 
+                    label='PayPal' 
                     id='PayPal' 
                     name='paymentMethod' 
                     value='PayPal' 
                     checked 
                     onChange={(e)=>setPaymentMethod(e.target.value)}
-                    ></Form.Check>
-
-                <Form.Check 
-                    type='radio' 
-                    label='Stripe' 
-                    id='Stripe' 
-                    name='paymentMethod' 
-                    value='Stripe' 
-                    onChange={(e)=>setPaymentMethod(e.target.value)}
-                    ></Form.Check>
-
-                <Form.Check 
-                    type='radio' 
-                    label='Google Pay' 
-                    id='GooglePay' 
-                    name='paymentMethod' 
-                    value='GooglePay'
-                    onChange={(e)=>setPaymentMethod(e.target.value)}
+                    className='py-2'
                     ></Form.Check>
 
             </Col>
             </Form.Group>
  
-             <Button type='submit' variant='primary'>
+             <Button type='submit' variant='primary' className='w-100 mt-3'>
                  Continue
              </Button>
          </Form>

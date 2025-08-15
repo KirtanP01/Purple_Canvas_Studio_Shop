@@ -36,15 +36,23 @@ const OrderConfirmationPage = ({ match }) => {
             navigate('/login')
         }
         const addPayPalScript = async () => {
-            const  { data: clientId } = await axios.get('/api/config/paypal')
-            const script = document.createElement('script')
-            script.type = 'text/javascript'
-            script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
-            script.async = true
-            script.onload = () => {
-                setSdkReady(true)
+            try {
+                const  { data: clientId } = await axios.get(`${process.env.REACT_APP_HOST}/api/config/paypal`)
+                const script = document.createElement('script')
+                script.type = 'text/javascript'
+                script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&disable-funding=credit,card`
+                script.async = true
+                script.onload = () => {
+                    setSdkReady(true)
+                }
+                script.onerror = () => {
+                    console.log('PayPal SDK failed to load')
+                    setSdkReady(false)
+                }
+                document.body.appendChild(script)
+            } catch (error) {
+                console.error('Error loading PayPal configuration:', error)
             }
-            document.body.appendChild(script)
         }
 
         //if(!order || order._id !== orderId) {
@@ -153,20 +161,6 @@ const OrderConfirmationPage = ({ match }) => {
                             <Row>
                                 <Col>Items</Col>
                                 <Col>${order.itemsPrice}</Col>
-                            </Row>
-                        </ListGroup.Item>
-
-                        <ListGroup.Item>
-                            <Row>
-                                <Col>Shipping</Col>
-                                <Col>${order.shippingPrice}</Col>
-                            </Row>
-                        </ListGroup.Item>
-
-                        <ListGroup.Item>
-                            <Row>
-                                <Col>Tax</Col>
-                                <Col>${order.taxPrice}</Col>
                             </Row>
                         </ListGroup.Item>
 

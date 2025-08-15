@@ -20,17 +20,35 @@ const Header = () => {
 
   return (
     <header>
-        <Navbar  className='color-nav' /*bg='dark'*/ variant='dark' expand='lg' collapseOnSelect>
-        <Container>
+        <Navbar className='color-nav' variant='dark' expand='lg' collapseOnSelect fixed="top">
+        <Container fluid>
           <LinkContainer to='/'>
-            <Navbar.Brand>Dress For Less</Navbar.Brand>
+            <Navbar.Brand className="d-flex align-items-center">
+              <img 
+                src="/logo/purple_canvas_studio_logo.png" 
+                alt="Purple Canvas Studio Logo" 
+                height="80" 
+                className="me-2 d-none d-sm-inline"
+                style={{verticalAlign: 'middle'}}
+              />
+              <img 
+                src="/logo/purple_canvas_studio_logo.png" 
+                alt="Purple Canvas Studio Logo" 
+                height="50" 
+                className="me-2 d-sm-none"
+                style={{verticalAlign: 'middle'}}
+              />
+              <span className="d-none d-md-inline">Purple Canvas Studio</span>
+              <span className="d-md-none">Purple Canvas</span>
+              <small style={{fontSize: '0.6em', marginLeft: '4px'}}>LLC</small>
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
           <SearchBox />
             <Nav className='ms-auto'>
               <LinkContainer to='/cart'>
-                <Nav.Link><i className='fas fa-shopping-cart'></i>Cart</Nav.Link>
+                <Nav.Link><i className='fas fa-shopping-cart'></i><span className="d-none d-sm-inline ms-1">Cart</span></Nav.Link>
               </LinkContainer>
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
@@ -40,7 +58,7 @@ const Header = () => {
                   <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
                 </NavDropdown>
               ) : <LinkContainer to='/login'>
-              <Nav.Link><i className='fas fa-user'></i>Sign In</Nav.Link>
+              <Nav.Link><i className='fas fa-user'></i><span className="d-none d-sm-inline ms-1">Sign In</span></Nav.Link>
             </LinkContainer>}
             {userInfo && userInfo.isAdmin && (
               <NavDropdown title='Admin' id='adminmenu'>

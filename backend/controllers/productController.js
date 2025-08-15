@@ -80,18 +80,33 @@ const addProduct = asyncHandler(async(req, res) => {
 const updateProduct = asyncHandler(async(req, res) => {
     const {name, price, description,image, brand, size, category,quantityInStock, } = req.body
 
-    const product = await Product.findById(req.params.id)
-    product.name = name
-    product.price = price
-    product.description = description
-    product.image = image
-    product.brand = brand
-    product.size = size
-    product.category = category
-    product.quantityInStock = quantityInStock
+    console.log('Updating product with data:', req.body)
+    console.log('Image received:', image)
 
+    const product = await Product.findById(req.params.id)
+    
     if(product){
+        product.name = name
+        product.price = price
+        product.description = description
+        product.image = image
+        product.brand = brand
+        product.size = size
+        product.category = category
+        product.quantityInStock = quantityInStock
+
+        console.log('Product before save:', {
+            id: product._id,
+            name: product.name,
+            image: product.image
+        })
+
         const updatedProduct = await product.save()
+        console.log('Product after save:', {
+            id: updatedProduct._id,
+            name: updatedProduct.name,
+            image: updatedProduct.image
+        })
         res.json(updatedProduct)
     } else{
         res.status(404)

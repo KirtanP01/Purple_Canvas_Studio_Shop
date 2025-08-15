@@ -8,6 +8,7 @@ import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { listProductDetails, updateProduct } from '../actions/productActions'
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
+import { getApiUrl } from '../config/api'
 
 
 const ProductEditPage = ({ match }) => {    
@@ -56,53 +57,42 @@ const ProductEditPage = ({ match }) => {
 
     const uploadFileHandler = async (e) => {
         const file = e.target.files[0]
+        if (!file) {
+            console.log('No file selected')
+            return
+        }
+        
         const formData = new FormData()
         formData.append('image', file)
-        console.log('File name: ' + file)
-        console.log('Existing file name: ' + product.image)
-        if (!file){
-            setImage(product.image)
-            setUploading(false)
-        } else {
-            setUploading(true)
+        console.log('Uploading file:', file.name)
+        
+        setUploading(true)
 
-            try {
-                const config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
-    
-                const { data } = await axios.post('/api/upload', formData, config)
-    
-                setImage(data)
-                setUploading(false)
-            } catch (error) {
-                console.log(error)
-                setUploading(false)
             }
+
+            // Use the correct API URL based on environment
+            const { data } = await axios.post(getApiUrl('/api/upload'), formData, config)
+
+            // Response should be a string path
+            setImage(data)
+            setUploading(false)
+            console.log('Upload successful:', data)
+        } catch (error) {
+            console.error('Upload error:', error.response?.data || error.message)
+            alert('Upload failed: ' + (error.response?.data?.message || error.message))
+            setUploading(false)
         }
-
-        // try {
-        //     const config = {
-        //         headers: {
-        //             'Content-Type': 'multipart/form-data'
-        //         }
-        //     }
-
-        //     const { data } = await axios.post('/api/upload', formData, config)
-
-        //     setImage(data)
-        //     setUploading(false)
-        // } catch (error) {
-        //     console.log(error)
-        //     setUploading(false)
-        // }
     }
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(updateProduct({
+        console.log('Submitting product with image:', image)
+        const productData = {
             _id: productId,
             name,
             price,
@@ -112,8 +102,9 @@ const ProductEditPage = ({ match }) => {
             category,
             description,
             quantityInStock,
-        })
-        )
+        }
+        console.log('Product data being sent:', productData)
+        dispatch(updateProduct(productData))
     }
   
     return( 
@@ -153,21 +144,23 @@ const ProductEditPage = ({ match }) => {
                 ></Form.Control>
             </Form.Group>
             
-            <Form.Group controlId='image'>
+            <Form.Group controlId='image' className='mb-3'>
                 <Form.Label>Image</Form.Label>
                 <Form.Control
                     type='text' 
                     placeholder='Enter image URL'
                     value={image}
                     onChange={(e) => setImage(e.target.value)}
+                    className='mb-2'
                 ></Form.Control>
                 <Form.Control
                     type='file'
-                    /*id='image-file'*/
-                    label='Choose File'
-                    custom='true'
+                    accept='image/*'
                     onChange={uploadFileHandler}
                 ></Form.Control>
+                <Form.Text className='text-muted'>
+                    Choose an image file (JPG, JPEG, PNG)
+                </Form.Text>
                 {uploading && <Loader />}
             </Form.Group>
 

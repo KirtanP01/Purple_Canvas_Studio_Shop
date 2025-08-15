@@ -23,8 +23,8 @@ const App = () => {
   return (
     <Router>
       <Header />
-      <main className='py-3'>
-        <Container>
+      <main className='py-3' style={{marginTop: '120px'}}>
+        <Container fluid>
           <Routes>
             <Route path='/order/:id' element={<OrderConfirmationPage />} />
             <Route path='/login/shipping' element={<ShippingPage />} />
