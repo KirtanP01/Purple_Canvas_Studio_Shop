@@ -6,12 +6,14 @@ import {
     CART_SAVE_PAYMENT_METHOD,
     CART_RESET,
 } from '../constants/cartConstants'
+import { getApiUrl } from '../config/api'
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
     //console.log('Quantity1: ' + qty)
     //console.log('Product1: ' + id)
     //const { data } = await axios.get(`/api/products/${id}`)
-    const { data } = await axios.get(`${process.env.REACT_APP_HOST}/api/products/${id}`)
+    //const { data } = await axios.get(`${process.env.REACT_APP_HOST}/api/products/${id}`)
+    const { data } = await axios.get(getApiUrl(`/api/products/${id}`))
     //console.log('Quantity2: ' + qty)
     //console.log('Product2: ' + id)
     dispatch({

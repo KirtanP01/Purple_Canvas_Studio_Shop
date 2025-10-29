@@ -30,7 +30,7 @@ export const listProducts = (keyword = '', pageNumber='') => async (dispatch) =>
         //const{ data } = await axios.get('/api/products')
         //const{ data } = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
         //const { data } = await axios.get(`http://ec2-54-167-19-199.compute-1.amazonaws.com:5000/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
-        const { data } = await axios.get(`${process.env.REACT_APP_HOST}/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
+        const { data } = await axios.get(getApiUrl(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`))
 
         dispatch({
             type: PRODUCT_LIST_SUCCESS,
@@ -53,7 +53,7 @@ export const listProductDetails = (id) => async (dispatch) => {
         dispatch({ type: PRODUCT_DETAILS_REQUEST })
 
         //const{ data } = await axios.get(`/api/products/${id}`)
-        const { data } = await axios.get(`${process.env.REACT_APP_HOST}/api/products/${id}`)
+        const { data } = await axios.get(getApiUrl(`/api/products/${id}`))
 
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
@@ -84,7 +84,7 @@ export const deleteProduct = (id) => async(dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
-        await axios.delete(`${process.env.REACT_APP_HOST}/api/products/${id}`, config)
+        await axios.delete(getApiUrl(`/api/products/${id}`), config)
         //await axios.delete(`/api/products/${id}`, config)
 
         dispatch({
@@ -115,7 +115,7 @@ export const addProduct = () => async(dispatch, getState) => {
             }
         }
 
-            const {data} = await axios.post(`${process.env.REACT_APP_HOST}/api/products`, {}, config)
+            const {data} = await axios.post(getApiUrl(`/api/products`), {}, config)
             //const {data} = await axios.post('/api/products`, {}, config)
 
         dispatch({
@@ -180,7 +180,7 @@ export const createProductReview = (productId, review) => async(dispatch, getSta
             }
         }
         //await axios.post(`/api/products/${productId}/reviews`, review, config)
-        await axios.post(`${process.env.REACT_APP_HOST}/api/products/${productId}/reviews`, review, config)
+        await axios.post(getApiUrl(`/api/products/${productId}/reviews`), review, config)
 
         dispatch({
             type: PRODUCT_REVIEW_SUCCESS
@@ -201,7 +201,7 @@ export const listTopProducts = () => async (dispatch) => {
         dispatch({ type: PRODUCT_TOP_REQUEST })
 
         //const{ data } = await axios.get(`/api/products/top`)
-        const { data } = await axios.get(`${process.env.REACT_APP_HOST}/api/products/top`)
+        const { data } = await axios.get(getApiUrl(`/api/products/top`))
 
         dispatch({
             type: PRODUCT_TOP_SUCCESS,

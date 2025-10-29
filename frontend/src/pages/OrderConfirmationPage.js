@@ -37,7 +37,7 @@ const OrderConfirmationPage = ({ match }) => {
         }
         const addPayPalScript = async () => {
             try {
-                const  { data: clientId } = await axios.get(`${process.env.REACT_APP_HOST}/api/config/paypal`)
+                const  { data: clientId } = await axios.get(getApiUrl(`/api/config/paypal`))
                 const script = document.createElement('script')
                 script.type = 'text/javascript'
                 script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&disable-funding=credit,card`

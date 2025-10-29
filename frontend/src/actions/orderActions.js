@@ -36,7 +36,7 @@ export const createOrder = (order) => async(dispatch, getState) => {
         }
 
         //const{ data } = await axios.post(`/api/orders`, order, config)
-        const{ data } = await axios.post(`${process.env.REACT_APP_HOST}/api/orders`, order, config)
+        const{ data } = await axios.post(getApiUrl(`/api/orders`), order, config)
 
         dispatch({
             type: ORDER_CREATE_SUCCESS,
@@ -68,7 +68,7 @@ export const getOrderDetails = (id) => async(dispatch, getState) => {
         }
 
         //const{ data } = await axios.get(`/api/orders/${id}`, config)
-        const{ data } = await axios.get(`${process.env.REACT_APP_HOST}/api/orders/${id}`, config)
+        const{ data } = await axios.get(getApiUrl(`/api/orders/${id}`), config)
 
         dispatch({
             type: ORDER_DETAILS_SUCCESS,
@@ -101,7 +101,7 @@ export const payOrder = (orderId, paymentResult) => async(dispatch, getState) =>
         }
 
         //const{ data } = await axios.put(`/api/orders/${orderId}/pay`, paymentResult, config)
-        const{ data } = await axios.put(`${process.env.REACT_APP_HOST}/api/orders/${orderId}/pay`, paymentResult, config)
+        const{ data } = await axios.put(getApiUrl(`/api/orders/${orderId}/pay`), paymentResult, config)
 
         dispatch({
             type: ORDER_PAY_SUCCESS,
@@ -133,7 +133,7 @@ export const listMyOrders = () => async(dispatch, getState) => {
         }
 
         //const{ data } = await axios.get(`/api/orders/myorders`, config)
-        const{ data } = await axios.get(`${process.env.REACT_APP_HOST}/api/orders/myorders`, config)
+        const{ data } = await axios.get(getApiUrl(`/api/orders/myorders`), config)
 
         dispatch({
             type: LIST_MY_ORDERS_SUCCESS,
@@ -165,7 +165,7 @@ export const listOrders = () => async(dispatch, getState) => {
         }
 
         //const { data } = await axios.get(`/api/orders`, config)
-        const { data } = await axios.get(`${process.env.REACT_APP_HOST}/api/orders`, config)
+        const { data } = await axios.get(getApiUrl(`/api/orders`), config)
 
         dispatch({
             type: ORDER_LIST_SUCCESS,
@@ -197,7 +197,7 @@ export const deliverOrder = (order) => async(dispatch, getState) => {
         }
 
         //const{ data } = await axios.put(`/api/orders/${order._id}/deliver`, {}, config)
-        const{ data } = await axios.put(`${process.env.REACT_APP_HOST}/api/orders/${order._id}/deliver`, {}, config)
+        const{ data } = await axios.put(getApiUrl(`/api/orders/${order._id}/deliver`), {}, config)
 
         dispatch({
             type: ORDER_DELIVER_SUCCESS,
