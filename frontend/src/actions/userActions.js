@@ -27,7 +27,7 @@ import {
 } from "../constants/userConstants"
 import { LIST_MY_ORDERS_RESET } from '../constants/orderConstants'
 import { CART_RESET } from '../constants/cartConstants'
-
+import { getApiUrl } from '../config/api'
 export const login = (email, password) => async(dispatch) => {
     try{
         dispatch({
